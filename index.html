@@ -8,7 +8,7 @@
     <title>Content Creator's Toolkit - Free Browser-Based Tools</title>
     <meta name="description" content="A free suite of fast, browser-based tools for content creators. Includes a Hashtag Generator, Bio Link Page Builder, AI Image Caption Generator, and a Video to GIF Maker. No sign-up required.">
     <meta name="keywords" content="content creator tools, hashtag generator, link in bio tool, ai caption generator, instagram tools, twitter tools, social media marketing, video to gif, free tools for creators">
-    <meta name="author" content="Gemini">
+    <meta name="author" content="kang company">
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>K</text></svg>">
@@ -236,6 +236,14 @@
         <section id="caption" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">✍️ AI Image Caption Generator</h3>
             <p class="text-gray-400 mb-6">Upload an image and let AI suggest engaging captions, questions, or relevant quotes.</p>
+            
+            <!-- API Key Input -->
+            <div class="mb-6">
+                <label for="api-key" class="block mb-1 text-sm font-medium">Your Gemini API Key</label>
+                <input type="password" id="api-key" class="input-field" placeholder="Enter your Google AI Studio API Key here">
+                <p class="text-xs text-gray-500 mt-1">Get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-400 hover:underline">Google AI Studio</a>. Your key is stored only in your browser.</p>
+            </div>
+            
             <div class="flex flex-col items-center">
                 <input type="file" id="image-upload" accept="image/*" class="hidden">
                 <button id="upload-btn" class="btn-primary mb-4">Click to Upload Image</button>
@@ -504,15 +512,18 @@
             const captionApp = {
                 uploadBtn: document.getElementById('upload-btn'),
                 fileInput: document.getElementById('image-upload'),
+                apiKeyInput: document.getElementById('api-key'),
                 previewContainer: document.getElementById('image-preview-container'),
                 previewImg: document.getElementById('image-preview'),
                 loader: document.getElementById('caption-loader'),
                 resultsContainer: document.getElementById('caption-results'),
-                apiKey: "", // Gemini API key is handled by the environment
-                apiUrl: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=`,
                 init() {
                     this.uploadBtn.addEventListener('click', () => this.fileInput.click());
                     this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
+                    this.apiKeyInput.value = localStorage.getItem('geminiApiKey') || '';
+                    this.apiKeyInput.addEventListener('input', () => {
+                        localStorage.setItem('geminiApiKey', this.apiKeyInput.value);
+                    });
                 },
                 handleFileUpload(e) {
                     const file = e.target.files[0];
@@ -528,9 +539,17 @@
                     }
                 },
                 async generateCaptions(file) {
+                    const apiKey = this.apiKeyInput.value.trim();
+                    if (!apiKey) {
+                        this.resultsContainer.innerHTML = `<p class="text-yellow-400 text-center">Please enter your Google Gemini API key above to use this feature.</p>`;
+                        return;
+                    }
+
                     this.loader.classList.remove('hidden');
                     const base64Data = await this.toBase64(file);
                     
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
                     const payload = {
                         contents: [{
                             parts: [
@@ -541,14 +560,16 @@
                     };
 
                     try {
-                        const response = await fetch(`${this.apiUrl}${this.apiKey}`, {
+                        const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(payload)
                         });
 
                         if (!response.ok) {
-                            throw new Error(`API error: ${response.statusText}`);
+                            const errorData = await response.json();
+                            console.error('API Error Response:', errorData);
+                            throw new Error(`API error (${response.status}): ${errorData.error?.message || response.statusText}`);
                         }
 
                         const result = await response.json();
@@ -556,11 +577,11 @@
                         if (text) {
                             this.displayResults(text);
                         } else {
-                           this.resultsContainer.innerHTML = `<p class="text-red-400">Could not generate captions. The response was empty.</p>`;
+                           this.resultsContainer.innerHTML = `<p class="text-red-400">Could not generate captions. The response from the AI was empty.</p>`;
                         }
                     } catch (error) {
                         console.error('Error:', error);
-                        this.resultsContainer.innerHTML = `<p class="text-red-400">An error occurred: ${error.message}. Please check the console for details.</p>`;
+                        this.resultsContainer.innerHTML = `<p class="text-red-400">An error occurred: ${error.message}. Please check that your API key is correct.</p>`;
                     } finally {
                         this.loader.classList.add('hidden');
                     }
