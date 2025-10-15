@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Content Creator's Toolkit - Free Browser-Based Tools</title>
+    <meta name="description" content="A free suite of fast, browser-based tools for content creators. Includes a Hashtag Generator, Bio Link Page Builder, AI Image Caption Generator, and a Video to GIF Maker. No sign-up required.">
+    <meta name="keywords" content="content creator tools, hashtag generator, link in bio tool, ai caption generator, instagram tools, twitter tools, social media marketing, video to gif, free tools for creators">
+    <meta name="author" content="Gemini">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>K</text></svg>">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- GIF.js library for GIF Maker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* bg-gray-900 */
+        }
+        .tool-card {
+            background-color: #1f2937; /* bg-gray-800 */
+            border: 1px solid #374151; /* border-gray-700 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 2rem; /* mb-8 */
+            transition: all 0.3s ease-in-out;
+        }
+        .tool-card:target {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5); /* blue-500 */
+            border-color: #3b82f6; /* blue-500 */
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* bg-blue-600 */
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* bg-blue-700 */
+        }
+        .btn-secondary {
+            background-color: #4b5563; /* bg-gray-600 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #6b7280; /* bg-gray-500 */
+        }
+        .input-field {
+            background-color: #374151; /* bg-gray-700 */
+            border: 1px solid #4b5563; /* border-gray-600 */
+            color: #f3f4f6; /* text-gray-100 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.625rem;
+            width: 100%;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+        }
+        .hashtag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            background-color: #374151;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        .hashtag-item {
+            background-color: #4b5563;
+            color: #d1d5db;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #22c55e; /* green-500 */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 7px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        .toast.show {
+            opacity: 1;
+            bottom: 30px;
+        }
+        /* Loader styles */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <!-- Header & Navigation -->
+    <header class="bg-gray-800/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-700">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl sm:text-2xl font-bold text-white">
+                <a href="#">🛠️ Content Creator's Toolkit</a>
+            </h1>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#hashtag" class="hover:text-blue-400 transition">Hashtag Generator</a>
+                <a href="#bio-link" class="hover:text-blue-400 transition">Bio Link Builder</a>
+                <a href="#caption" class="hover:text-blue-400 transition">AI Captioner</a>
+                <a href="#gif-maker" class="hover:text-blue-400 transition">GIF Maker</a>
+            </div>
+            <div class="md:hidden">
+                <select onchange="window.location.hash = this.value" class="input-field text-sm">
+                    <option value="#">Menu</option>
+                    <option value="#hashtag">Hashtag Generator</option>
+                    <option value="#bio-link">Bio Link Builder</option>
+                    <option value="#caption">AI Captioner</option>
+                    <option value="#gif-maker">GIF Maker</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-12">
+
+        <!-- Intro -->
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">Your One-Stop Toolkit for Creation</h2>
+            <p class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">A collection of small, fast, and free browser-based tools to supercharge your content workflow. No downloads, no sign-ups.</p>
+        </div>
+
+        <!-- Tool: Hashtag Generator -->
+        <section id="hashtag" class="tool-card">
+            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">⚡ Hashtag Generator</h3>
+            <p class="text-gray-400 mb-6">Enter a keyword to generate relevant hashtags for your social media posts.</p>
+            <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <input type="text" id="hashtag-keyword" class="input-field flex-grow" placeholder="e.g., web development, travel, fitness">
+                <button id="generate-hashtags-btn" class="btn-primary">Generate</button>
+            </div>
+            <div id="hashtag-results" class="space-y-6 hidden">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-lg font-semibold text-white">📸 Instagram</h4>
+                        <button class="btn-secondary text-sm copy-hashtags-btn" data-target="instagram-hashtags">Copy</button>
+                    </div>
+                    <div class="hashtag-list" id="instagram-hashtags"></div>
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-lg font-semibold text-white">🐦 Twitter / X</h4>
+                        <button class="btn-secondary text-sm copy-hashtags-btn" data-target="twitter-hashtags">Copy</button>
+                    </div>
+                    <div class="hashtag-list" id="twitter-hashtags"></div>
+                </div>
+                <div>
+                     <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-lg font-semibold text-white">💼 LinkedIn</h4>
+                        <button class="btn-secondary text-sm copy-hashtags-btn" data-target="linkedin-hashtags">Copy</button>
+                    </div>
+                    <div class="hashtag-list" id="linkedin-hashtags"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tool: Bio Link Page Builder -->
+        <section id="bio-link" class="tool-card">
+            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">🔗 Bio Link Page Builder</h3>
+            <p class="text-gray-400 mb-6">Create a simple, customizable page for your social media bio links. An easy alternative to Linktree.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Editor -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold">Editor</h4>
+                    <div>
+                        <label for="bio-name" class="block mb-1 text-sm font-medium">Your Name / Brand</label>
+                        <input type="text" id="bio-name" class="input-field" placeholder="@yourname" value="@yourname">
+                    </div>
+                     <div>
+                        <label for="bio-description" class="block mb-1 text-sm font-medium">Short Description</label>
+                        <input type="text" id="bio-description" class="input-field" placeholder="Creator | Developer | Explorer" value="Creator | Developer | Explorer">
+                    </div>
+                    <div id="bio-links-container" class="space-y-3 pt-4">
+                        <!-- Links will be added here -->
+                    </div>
+                    <button id="add-link-btn" class="btn-secondary w-full">+ Add New Link</button>
+                    <button id="export-html-btn" class="btn-primary w-full mt-4">Download Bio Page HTML</button>
+                </div>
+                <!-- Preview -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-2">Live Preview</h4>
+                    <div class="bg-gray-900 rounded-xl p-4 border border-gray-700 aspect-[9/16] max-h-[600px] overflow-y-auto">
+                        <div class="text-center">
+                            <img id="preview-avatar" src="https://placehold.co/96x96/3b82f6/FFFFFF?text=Bio" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-gray-600">
+                            <h2 id="preview-name" class="text-xl font-bold text-white">@yourname</h2>
+                            <p id="preview-description" class="text-gray-400 mb-6 text-sm">Creator | Developer | Explorer</p>
+                            <div id="preview-links" class="space-y-4">
+                                <!-- Preview links will be mirrored here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tool: Image Caption & Quote Generator -->
+        <section id="caption" class="tool-card">
+            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">✍️ AI Image Caption Generator</h3>
+            <p class="text-gray-400 mb-6">Upload an image and let AI suggest engaging captions, questions, or relevant quotes.</p>
+            <div class="flex flex-col items-center">
+                <input type="file" id="image-upload" accept="image/*" class="hidden">
+                <button id="upload-btn" class="btn-primary mb-4">Click to Upload Image</button>
+                <div id="image-preview-container" class="hidden w-full max-w-md mb-4">
+                    <img id="image-preview" src="#" alt="Image Preview" class="rounded-lg max-h-80 mx-auto"/>
+                </div>
+                <div id="caption-loader" class="hidden">
+                    <div class="loader"></div>
+                    <p class="text-center text-gray-400">AI is thinking...</p>
+                </div>
+                <div id="caption-results" class="w-full text-left"></div>
+            </div>
+        </section>
+
+        <!-- Tool: Video Trimmer & GIF Maker -->
+        <section id="gif-maker" class="tool-card">
+            <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">🎬 Simple Video to GIF Maker</h3>
+            <p class="text-gray-400 mb-6">Quickly convert a short video clip into an animated GIF without watermarks.</p>
+            <div class="flex flex-col items-center">
+                <input type="file" id="video-upload" accept="video/*" class="hidden">
+                 <button id="video-upload-btn" class="btn-primary mb-4">Click to Upload Video</button>
+                <div id="video-container" class="hidden w-full max-w-2xl mb-4">
+                    <video id="video-preview" controls class="w-full rounded-lg"></video>
+                    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <label for="gif-start" class="block mb-1 text-sm font-medium">Start Time (s)</label>
+                            <input type="number" id="gif-start" class="input-field" value="0" min="0">
+                        </div>
+                        <div>
+                            <label for="gif-end" class="block mb-1 text-sm font-medium">End Time (s)</label>
+                            <input type="number" id="gif-end" class="input-field" value="3" min="0">
+                        </div>
+                    </div>
+                    <button id="create-gif-btn" class="btn-primary w-full mt-4">Create GIF</button>
+                </div>
+                <div id="gif-loader" class="hidden">
+                    <div class="loader"></div>
+                    <p class="text-center text-gray-400">Brewing your GIF... this may take a moment.</p>
+                </div>
+                <div id="gif-output" class="mt-4"></div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <footer class="text-center py-8 border-t border-gray-800">
+        <p class="text-gray-500">by kang company</p>
+        <button id="show-email-btn" class="btn-secondary mt-2 inline-block">Email Us</button>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('show-email-btn').addEventListener('click', () => {
+                const email = 'kangali009kang@gmail.com';
+                copyToClipboard(email, `Email copied: ${email}`);
+            });
+            
+            // --- Toast Notification ---
+            const toast = document.getElementById('toast');
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+
+            // --- Generic Clipboard Copy ---
+            function copyToClipboard(text, message = 'Copied to clipboard!') {
+                const tempInput = document.createElement('textarea');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                showToast(message);
+            }
+            
+            // --- Tool 1: Hashtag Generator ---
+            const hashtagApp = {
+                keywordInput: document.getElementById('hashtag-keyword'),
+                generateBtn: document.getElementById('generate-hashtags-btn'),
+                resultsContainer: document.getElementById('hashtag-results'),
+                copyBtns: document.querySelectorAll('.copy-hashtags-btn'),
+                db: { // Mock database
+                    'web development': {
+                        instagram: ['#webdev', '#frontend', '#backend', '#javascript', '#reactjs', '#codinglife', '#developer', '#htmlcss', '#uidesign', '#webdeveloper'],
+                        twitter: ['#100DaysOfCode', '#CodeNewbie', '#WebDev', '#JavaScript', '#React', '#NodeJS'],
+                        linkedin: ['#WebDevelopment', '#SoftwareEngineering', '#FrontEndDevelopment', '#JavaScript', '#Technology', '#Innovation']
+                    },
+                    'travel': {
+                        instagram: ['#travelgram', '#instatravel', '#wanderlust', '#travelphotography', '#explore', '#adventure', '#doyoutravel', '#passionpassport', '#beautifuldestinations', '#vacation'],
+                        twitter: ['#TravelTuesday', '#TTOT', '#Travel', '#Wanderlust', '#Adventure'],
+                        linkedin: ['#Travel', '#Tourism', '#Businesstravel', '#CorporateTravel', '#Hospitality']
+                    },
+                    'fitness': {
+                        instagram: ['#fitnessmotivation', '#gymlife', '#fitfam', '#workout', '#healthylifestyle', '#getfit', '#fitnessjourney', '#motivation', '#strong', '#instafit'],
+                        twitter: ['#Fitness', '#Health', '#Workout', '#Motivation', '#FitLife'],
+                        linkedin: ['#Fitness', '#Wellness', '#Health', '#CorporateWellness', '#PersonalTraining']
+                    },
+                    'default': {
+                        instagram: ['#instagood', '#photooftheday', '#picoftheday', '#instadaily', '#love', '#style', '#art', '#lifeisgood', '#explorepage', '#trending'],
+                        twitter: ['#Trending', '#Viral', '#Inspiration', '#Motivation', '#GoodVibes'],
+                        linkedin: ['#ProfessionalDevelopment', '#Networking', '#Career', '#Business', '#Leadership']
+                    }
+                },
+                init() {
+                    this.generateBtn.addEventListener('click', () => this.generate());
+                    this.copyBtns.forEach(btn => {
+                        btn.addEventListener('click', (e) => this.copy(e));
+                    });
+                },
+                generate() {
+                    const keyword = this.keywordInput.value.toLowerCase().trim();
+                    const tags = this.db[keyword] || this.db['default'];
+                    
+                    Object.keys(tags).forEach(platform => {
+                        const container = document.getElementById(`${platform}-hashtags`);
+                        container.innerHTML = tags[platform].map(tag => `<span class="hashtag-item">${tag}</span>`).join('');
+                    });
+                    this.resultsContainer.classList.remove('hidden');
+                },
+                copy(e) {
+                    const targetId = e.target.dataset.target;
+                    const container = document.getElementById(targetId);
+                    const tags = Array.from(container.children).map(span => span.textContent).join(' ');
+                    copyToClipboard(tags);
+                }
+            };
+            hashtagApp.init();
+
+            // --- Tool 2: Bio Link Page Builder ---
+            const bioLinkApp = {
+                nameInput: document.getElementById('bio-name'),
+                descriptionInput: document.getElementById('bio-description'),
+                linksContainer: document.getElementById('bio-links-container'),
+                previewName: document.getElementById('preview-name'),
+                previewDescription: document.getElementById('preview-description'),
+                previewLinks: document.getElementById('preview-links'),
+                addLinkBtn: document.getElementById('add-link-btn'),
+                exportBtn: document.getElementById('export-html-btn'),
+                linkCount: 0,
+                init() {
+                    this.addLinkBtn.addEventListener('click', () => this.addLink());
+                    this.exportBtn.addEventListener('click', () => this.exportHtml());
+                    this.nameInput.addEventListener('input', () => this.updatePreview());
+                    this.descriptionInput.addEventListener('input', () => this.updatePreview());
+                    this.addLink(); // Start with one link
+                    this.addLink(); 
+                },
+                addLink(title = 'My Website', url = 'https://example.com') {
+                    this.linkCount++;
+                    const id = this.linkCount;
+                    const linkHtml = `
+                        <div class="p-3 bg-gray-700 rounded-lg link-editor-item" data-link-id="${id}">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-sm font-medium">Link #${id}</label>
+                                <button class="text-red-400 hover:text-red-300 remove-link-btn" data-link-id="${id}">Remove</button>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <input type="text" class="input-field text-sm link-title-input" placeholder="Link Title" value="${title}">
+                                <input type="url" class="input-field text-sm link-url-input" placeholder="https://example.com" value="${url}">
+                            </div>
+                        </div>
+                    `;
+                    this.linksContainer.insertAdjacentHTML('beforeend', linkHtml);
+                    this.attachLinkListeners(id);
+                    this.updatePreview();
+                },
+                attachLinkListeners(id) {
+                    const linkElement = this.linksContainer.querySelector(`[data-link-id="${id}"]`);
+                    linkElement.querySelector('.remove-link-btn').addEventListener('click', () => this.removeLink(id));
+                    linkElement.querySelector('.link-title-input').addEventListener('input', () => this.updatePreview());
+                    linkElement.querySelector('.link-url-input').addEventListener('input', () => this.updatePreview());
+                },
+                removeLink(id) {
+                    this.linksContainer.querySelector(`[data-link-id="${id}"]`).remove();
+                    this.updatePreview();
+                },
+                updatePreview() {
+                    this.previewName.textContent = this.nameInput.value;
+                    this.previewDescription.textContent = this.descriptionInput.value;
+                    this.previewLinks.innerHTML = '';
+                    
+                    const links = this.linksContainer.querySelectorAll('.link-editor-item');
+                    links.forEach(linkEl => {
+                        const titleInput = linkEl.querySelector('.link-title-input');
+                        const urlInput = linkEl.querySelector('.link-url-input');
+                        if (!titleInput || !urlInput) return;
+                        const title = titleInput.value;
+                        const url = urlInput.value;
+                        if (title && url) {
+                            const previewLink = `
+                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition">
+                                    ${title}
+                                </a>
+                            `;
+                            this.previewLinks.insertAdjacentHTML('beforeend', previewLink);
+                        }
+                    });
+                },
+                getBioPageHtml() {
+                    const name = this.nameInput.value;
+                    const description = this.descriptionInput.value;
+                    const linksHtml = Array.from(this.linksContainer.querySelectorAll('.link-editor-item'))
+                        .map(linkEl => {
+                            const title = linkEl.querySelector('.link-title-input').value;
+                            const url = linkEl.querySelector('.link-url-input').value;
+                            if (title && url) {
+                                return `
+                                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full max-w-md mx-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-5 rounded-lg transition-transform transform hover:scale-105 shadow-lg">
+                                        ${title}
+                                    </a>`;
+                            }
+                            return '';
+                        }).join('\n                            ');
+
+                    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${name}'s Links</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-8 text-center">
+        <header class="mb-8">
+            <img src="https://placehold.co/128x128/3b82f6/FFFFFF?text=${name.charAt(1) ? name.charAt(1).toUpperCase() : 'K'}" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-700">
+            <h1 class="text-3xl font-bold">${name}</h1>
+            <p class="text-gray-400 mt-1">${description}</p>
+        </header>
+        <main class="space-y-4">
+            ${linksHtml}
+        </main>
+        <footer class="mt-12 text-gray-500 text-sm">
+            <p>built by kang company</p>
+        </footer>
+    </div>
+</body>
+</html>`;
+                },
+                exportHtml() {
+                    const htmlContent = this.getBioPageHtml();
+                    const blob = new Blob([htmlContent], { type: 'text/html' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = 'bio-link-page.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            };
+            bioLinkApp.init();
+
+            // --- Tool 3: AI Image Caption Generator ---
+            const captionApp = {
+                uploadBtn: document.getElementById('upload-btn'),
+                fileInput: document.getElementById('image-upload'),
+                previewContainer: document.getElementById('image-preview-container'),
+                previewImg: document.getElementById('image-preview'),
+                loader: document.getElementById('caption-loader'),
+                resultsContainer: document.getElementById('caption-results'),
+                apiKey: "", // Gemini API key is handled by the environment
+                apiUrl: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=`,
+                init() {
+                    this.uploadBtn.addEventListener('click', () => this.fileInput.click());
+                    this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
+                },
+                handleFileUpload(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            this.previewImg.src = event.target.result;
+                            this.previewContainer.classList.remove('hidden');
+                            this.resultsContainer.innerHTML = '';
+                            this.generateCaptions(file);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                },
+                async generateCaptions(file) {
+                    this.loader.classList.remove('hidden');
+                    const base64Data = await this.toBase64(file);
+                    
+                    const payload = {
+                        contents: [{
+                            parts: [
+                                { text: "You are an expert social media manager. Generate content for this image. Provide 5 engaging captions (use emojis), 3 thought-provoking questions, and 3 relevant quotes. Format your response clearly with headings for 'Captions', 'Questions', and 'Quotes'." },
+                                { inlineData: { mimeType: file.type, data: base64Data } }
+                            ]
+                        }]
+                    };
+
+                    try {
+                        const response = await fetch(`${this.apiUrl}${this.apiKey}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`API error: ${response.statusText}`);
+                        }
+
+                        const result = await response.json();
+                        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (text) {
+                            this.displayResults(text);
+                        } else {
+                           this.resultsContainer.innerHTML = `<p class="text-red-400">Could not generate captions. The response was empty.</p>`;
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        this.resultsContainer.innerHTML = `<p class="text-red-400">An error occurred: ${error.message}. Please check the console for details.</p>`;
+                    } finally {
+                        this.loader.classList.add('hidden');
+                    }
+                },
+                displayResults(text) {
+                    const html = text
+                        .replace(/Captions/g, '<h4 class="text-lg font-semibold text-white mt-4 mb-2">📸 Captions</h4>')
+                        .replace(/Questions/g, '<h4 class="text-lg font-semibold text-white mt-4 mb-2">🤔 Questions</h4>')
+                        .replace(/Quotes/g, '<h4 class="text-lg font-semibold text-white mt-4 mb-2">❝ Quotes</h4>')
+                        .replace(/\*/g, '') // remove asterisks
+                        .split('\n')
+                        .map(line => {
+                            if (line.trim().length > 1 && !line.startsWith('<h4')) {
+                                return `<div class="bg-gray-700 p-3 rounded-lg mb-2 flex justify-between items-center group">
+                                            <p>${line.trim()}</p>
+                                            <button class="btn-secondary text-xs opacity-0 group-hover:opacity-100 transition-opacity" onclick="this.parentElement.dispatchEvent(new CustomEvent('copy-text', { bubbles: true, detail: { text: '${line.trim().replace(/'/g, "\\'")}' } }))">Copy</button>
+                                         </div>`;
+                            }
+                            return line;
+                        })
+                        .join('');
+
+                    this.resultsContainer.innerHTML = html;
+                },
+                toBase64(file) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => resolve(reader.result.split(',')[1]);
+                        reader.onerror = error => reject(error);
+                    });
+                }
+            };
+            captionApp.init();
+
+            // Event listener for copying captions
+            document.getElementById('caption-results').addEventListener('copy-text', (e) => {
+                copyToClipboard(e.detail.text);
+            });
+            
+            // --- Tool 4: Video to GIF Maker ---
+            const gifMakerApp = {
+                uploadBtn: document.getElementById('video-upload-btn'),
+                fileInput: document.getElementById('video-upload'),
+                videoContainer: document.getElementById('video-container'),
+                videoPreview: document.getElementById('video-preview'),
+                startTimeInput: document.getElementById('gif-start'),
+                endTimeInput: document.getElementById('gif-end'),
+                createBtn: document.getElementById('create-gif-btn'),
+                loader: document.getElementById('gif-loader'),
+                outputContainer: document.getElementById('gif-output'),
+                
+                init() {
+                    this.uploadBtn.addEventListener('click', () => this.fileInput.click());
+                    this.fileInput.addEventListener('change', (e) => this.handleFileUpload(e));
+                    this.createBtn.addEventListener('click', () => this.createGif());
+                },
+                handleFileUpload(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const url = URL.createObjectURL(file);
+                        this.videoPreview.src = url;
+                        this.videoContainer.classList.remove('hidden');
+                        this.outputContainer.innerHTML = '';
+                        this.videoPreview.onloadedmetadata = () => {
+                            this.endTimeInput.value = Math.min(3, Math.floor(this.videoPreview.duration));
+                            this.startTimeInput.max = Math.floor(this.videoPreview.duration);
+                            this.endTimeInput.max = Math.floor(this.videoPreview.duration);
+                        };
+                    }
+                },
+                createGif() {
+                    this.loader.classList.remove('hidden');
+                    this.outputContainer.innerHTML = '';
+                    
+                    const gif = new GIF({
+                        workers: 2,
+                        quality: 10,
+                        workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+                    });
+                    
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const video = this.videoPreview;
+                    
+                    const startTime = parseFloat(this.startTimeInput.value);
+                    const endTime = parseFloat(this.endTimeInput.value);
+                    const duration = endTime - startTime;
+                    
+                    if (duration <= 0) {
+                        // Replaced alert with toast notification
+                        showToast("Error: End time must be after start time.");
+                        this.loader.classList.add('hidden');
+                        return;
+                    }
+                    
+                    const frameRate = 10; // 10 fps
+                    const interval = 1 / frameRate;
+                    let currentTime = startTime;
+
+                    video.currentTime = currentTime;
+
+                    video.onseeked = () => {
+                        if (currentTime > endTime) {
+                            gif.render();
+                            return;
+                        }
+                        
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        gif.addFrame(canvas, { copy: true, delay: interval * 1000 });
+                        
+                        currentTime += interval;
+                        // Add a check to prevent infinite loops on some browsers
+                        if (currentTime < video.duration) {
+                           video.currentTime = currentTime;
+                        } else {
+                           gif.render();
+                        }
+                    };
+                    
+                    gif.on('finished', (blob) => {
+                        const url = URL.createObjectURL(blob);
+                        this.outputContainer.innerHTML = `
+                            <h4 class="text-lg font-semibold text-white mb-2">Your GIF is ready!</h4>
+                            <img src="${url}" class="rounded-lg border-2 border-gray-600 max-w-full mx-auto" alt="Generated GIF"/>
+                            <a href="${url}" download="creator-toolkit.gif" class="btn-primary inline-block mt-4">Download GIF</a>
+                        `;
+                        this.loader.classList.add('hidden');
+                    });
+                }
+            };
+            gifMakerApp.init();
+        });
+    </script>
+</body>
+</html>
