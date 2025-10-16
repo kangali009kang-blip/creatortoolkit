@@ -9,7 +9,13 @@
     <meta name="keywords" content="content creator tools, hashtag generator, link in bio tool, ai caption generator, instagram tools, twitter tools, social media marketing, video to gif, free tools for creators">
     <meta name="author" content="kang company">
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>K</text></svg>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-live-url.com/"> <meta property="og:title" content="Content Creator's Toolkit - Free Browser-Based Tools">
+    <meta property="og:description" content="A free suite of fast, browser-based tools to supercharge your content workflow. No downloads, no sign-ups.">
+    <meta property="og:image" content="https://i.imgur.com/3a2bY0b.png"> <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-live-url.com/"> <meta name="twitter:title" content="Content Creator's Toolkit - Free Browser-Based Tools">
+    <meta name="twitter:description" content="A free suite of fast, browser-based tools to supercharge your content workflow.">
+    <meta name="twitter:image" content="https://i.imgur.com/3a2bY0b.png"> <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>K</text></svg>">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -195,17 +201,22 @@
 
         <section id="bio-link" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">🔗 Bio Link Page Builder</h3>
-            <p class="text-gray-400 mb-6">Create a simple, customizable page for your social media bio links. An easy alternative to Linktree.</p>
+            <p class="text-gray-400 mb-6">Create a simple, customizable page for your social media bio links. Your progress is saved automatically.</p>
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="space-y-4">
                     <h4 class="text-lg font-semibold">Editor</h4>
                     <div>
+                        <label class="block mb-1 text-sm font-medium">Profile Picture</label>
+                        <button id="bio-avatar-btn" class="btn-secondary w-full">Upload Avatar</button>
+                        <input type="file" id="bio-avatar-upload" class="hidden" accept="image/*">
+                    </div>
+                    <div>
                         <label for="bio-name" class="block mb-1 text-sm font-medium">Your Name / Brand</label>
-                        <input type="text" id="bio-name" class="input-field" placeholder="@yourname" value="@yourname">
+                        <input type="text" id="bio-name" class="input-field" placeholder="@yourname">
                     </div>
                      <div>
                         <label for="bio-description" class="block mb-1 text-sm font-medium">Short Description</label>
-                        <input type="text" id="bio-description" class="input-field" placeholder="Creator | Developer | Explorer" value="Creator | Developer | Explorer">
+                        <input type="text" id="bio-description" class="input-field" placeholder="Creator | Developer | Explorer">
                     </div>
                     <div id="bio-links-container" class="space-y-3 pt-4">
                         </div>
@@ -216,7 +227,7 @@
                     <h4 class="text-lg font-semibold mb-2">Live Preview</h4>
                     <div class="bg-gray-900 rounded-xl p-4 border border-gray-700 aspect-[9/16] max-h-[600px] overflow-y-auto">
                         <div class="text-center">
-                            <img id="preview-avatar" src="https://placehold.co/96x96/3b82f6/FFFFFF?text=Bio" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-gray-600">
+                            <img id="preview-avatar" src="https://placehold.co/96x96/3b82f6/FFFFFF?text=Bio" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-gray-600 object-cover">
                             <h2 id="preview-name" class="text-xl font-bold text-white">@yourname</h2>
                             <p id="preview-description" class="text-gray-400 mb-6 text-sm">Creator | Developer | Explorer</p>
                             <div id="preview-links" class="space-y-4">
@@ -323,37 +334,18 @@
                 resultsContainer: document.getElementById('hashtag-results'),
                 copyBtns: document.querySelectorAll('.copy-hashtags-btn'),
                 db: { // Mock database
-                    'web development': {
-                        instagram: ['#webdev', '#frontend', '#backend', '#javascript', '#reactjs', '#codinglife', '#developer', '#htmlcss', '#uidesign', '#webdeveloper'],
-                        twitter: ['#100DaysOfCode', '#CodeNewbie', '#WebDev', '#JavaScript', '#React', '#NodeJS'],
-                        linkedin: ['#WebDevelopment', '#SoftwareEngineering', '#FrontEndDevelopment', '#JavaScript', '#Technology', '#Innovation']
-                    },
-                    'travel': {
-                        instagram: ['#travelgram', '#instatravel', '#wanderlust', '#travelphotography', '#explore', '#adventure', '#doyoutravel', '#passionpassport', '#beautifuldestinations', '#vacation'],
-                        twitter: ['#TravelTuesday', '#TTOT', '#Travel', '#Wanderlust', '#Adventure'],
-                        linkedin: ['#Travel', '#Tourism', '#Businesstravel', '#CorporateTravel', '#Hospitality']
-                    },
-                    'fitness': {
-                        instagram: ['#fitnessmotivation', '#gymlife', '#fitfam', '#workout', '#healthylifestyle', '#getfit', '#fitnessjourney', '#motivation', '#strong', '#instafit'],
-                        twitter: ['#Fitness', '#Health', '#Workout', '#Motivation', '#FitLife'],
-                        linkedin: ['#Fitness', '#Wellness', '#Health', '#CorporateWellness', '#PersonalTraining']
-                    },
-                    'default': {
-                        instagram: ['#instagood', '#photooftheday', '#picoftheday', '#instadaily', '#love', '#style', '#art', '#lifeisgood', '#explorepage', '#trending'],
-                        twitter: ['#Trending', '#Viral', '#Inspiration', '#Motivation', '#GoodVibes'],
-                        linkedin: ['#ProfessionalDevelopment', '#Networking', '#Career', '#Business', '#Leadership']
-                    }
+                    'web development': { instagram: ['#webdev', '#frontend', '#backend', '#javascript', '#reactjs', '#codinglife', '#developer', '#htmlcss', '#uidesign', '#webdeveloper'], twitter: ['#100DaysOfCode', '#CodeNewbie', '#WebDev', '#JavaScript', '#React', '#NodeJS'], linkedin: ['#WebDevelopment', '#SoftwareEngineering', '#FrontEndDevelopment', '#JavaScript', '#Technology', '#Innovation'] },
+                    'travel': { instagram: ['#travelgram', '#instatravel', '#wanderlust', '#travelphotography', '#explore', '#adventure', '#doyoutravel', '#passionpassport', '#beautifuldestinations', '#vacation'], twitter: ['#TravelTuesday', '#TTOT', '#Travel', '#Wanderlust', '#Adventure'], linkedin: ['#Travel', '#Tourism', '#Businesstravel', '#CorporateTravel', '#Hospitality'] },
+                    'fitness': { instagram: ['#fitnessmotivation', '#gymlife', '#fitfam', '#workout', '#healthylifestyle', '#getfit', '#fitnessjourney', '#motivation', '#strong', '#instafit'], twitter: ['#Fitness', '#Health', '#Workout', '#Motivation', '#FitLife'], linkedin: ['#Fitness', '#Wellness', '#Health', '#CorporateWellness', '#PersonalTraining'] },
+                    'default': { instagram: ['#instagood', '#photooftheday', '#picoftheday', '#instadaily', '#love', '#style', '#art', '#lifeisgood', '#explorepage', '#trending'], twitter: ['#Trending', '#Viral', '#Inspiration', '#Motivation', '#GoodVibes'], linkedin: ['#ProfessionalDevelopment', '#Networking', '#Career', '#Business', '#Leadership'] }
                 },
                 init() {
                     this.generateBtn.addEventListener('click', () => this.generate());
-                    this.copyBtns.forEach(btn => {
-                        btn.addEventListener('click', (e) => this.copy(e));
-                    });
+                    this.copyBtns.forEach(btn => btn.addEventListener('click', (e) => this.copy(e)));
                 },
                 generate() {
                     const keyword = this.keywordInput.value.toLowerCase().trim();
                     const tags = this.db[keyword] || this.db['default'];
-                    
                     Object.keys(tags).forEach(platform => {
                         const container = document.getElementById(`${platform}-hashtags`);
                         container.innerHTML = tags[platform].map(tag => `<span class="hashtag-item">${tag}</span>`).join('');
@@ -369,7 +361,7 @@
             };
             hashtagApp.init();
 
-            // --- Tool 2: Bio Link Page Builder ---
+            // --- Tool 2: Bio Link Page Builder (with saving and avatar upload) ---
             const bioLinkApp = {
                 nameInput: document.getElementById('bio-name'),
                 descriptionInput: document.getElementById('bio-description'),
@@ -379,16 +371,38 @@
                 previewLinks: document.getElementById('preview-links'),
                 addLinkBtn: document.getElementById('add-link-btn'),
                 exportBtn: document.getElementById('export-html-btn'),
+                avatarBtn: document.getElementById('bio-avatar-btn'),
+                avatarInput: document.getElementById('bio-avatar-upload'),
+                previewAvatar: document.getElementById('preview-avatar'),
+                avatarData: null, // To store Base64 avatar data
                 linkCount: 0,
                 init() {
                     this.addLinkBtn.addEventListener('click', () => this.addLink());
                     this.exportBtn.addEventListener('click', () => this.exportHtml());
                     this.nameInput.addEventListener('input', () => this.updatePreview());
                     this.descriptionInput.addEventListener('input', () => this.updatePreview());
-                    this.addLink(); // Start with one link
-                    this.addLink(); 
+                    this.avatarBtn.addEventListener('click', () => this.avatarInput.click());
+                    this.avatarInput.addEventListener('change', (e) => this.handleAvatarUpload(e));
+                    
+                    if (!this.loadState()) {
+                        // If no saved state, load defaults
+                        this.nameInput.value = '@yourname';
+                        this.descriptionInput.value = 'Creator | Developer | Explorer';
+                        this.addLink('My Website', 'https://example.com'); 
+                        this.addLink('My Portfolio', 'https://example.com'); 
+                    }
                 },
-                addLink(title = 'My Website', url = 'https://example.com') {
+                handleAvatarUpload(e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        this.avatarData = event.target.result;
+                        this.updatePreview();
+                    };
+                    reader.readAsDataURL(file);
+                },
+                addLink(title = '', url = '') {
                     this.linkCount++;
                     const id = this.linkCount;
                     const linkHtml = `
@@ -420,40 +434,62 @@
                 updatePreview() {
                     this.previewName.textContent = this.nameInput.value;
                     this.previewDescription.textContent = this.descriptionInput.value;
+                    this.previewAvatar.src = this.avatarData || 'https://placehold.co/96x96/3b82f6/FFFFFF?text=Bio';
                     this.previewLinks.innerHTML = '';
                     
                     const links = this.linksContainer.querySelectorAll('.link-editor-item');
                     links.forEach(linkEl => {
-                        const titleInput = linkEl.querySelector('.link-title-input');
-                        const urlInput = linkEl.querySelector('.link-url-input');
-                        if (!titleInput || !urlInput) return;
-                        const title = titleInput.value;
-                        const url = urlInput.value;
+                        const title = linkEl.querySelector('.link-title-input').value;
+                        const url = linkEl.querySelector('.link-url-input').value;
                         if (title && url) {
-                            const previewLink = `
-                                <a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition">
-                                    ${title}
-                                </a>
-                            `;
+                            const previewLink = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition">${title}</a>`;
                             this.previewLinks.insertAdjacentHTML('beforeend', previewLink);
                         }
                     });
+                    this.saveState();
+                },
+                saveState() {
+                    const links = Array.from(this.linksContainer.querySelectorAll('.link-editor-item')).map(el => ({
+                        title: el.querySelector('.link-title-input').value,
+                        url: el.querySelector('.link-url-input').value
+                    }));
+                    const state = {
+                        name: this.nameInput.value,
+                        description: this.descriptionInput.value,
+                        avatar: this.avatarData,
+                        links: links
+                    };
+                    localStorage.setItem('bioLinkState', JSON.stringify(state));
+                },
+                loadState() {
+                    const savedStateJSON = localStorage.getItem('bioLinkState');
+                    if (!savedStateJSON) return false;
+
+                    const state = JSON.parse(savedStateJSON);
+                    this.nameInput.value = state.name || '';
+                    this.descriptionInput.value = state.description || '';
+                    if (state.avatar) {
+                        this.avatarData = state.avatar;
+                    }
+                    this.linksContainer.innerHTML = '';
+                    if (state.links && state.links.length > 0) {
+                        state.links.forEach(link => this.addLink(link.title, link.url));
+                    }
+                    this.updatePreview();
+                    return true;
                 },
                 getBioPageHtml() {
                     const name = this.nameInput.value;
                     const description = this.descriptionInput.value;
-                    const linksHtml = Array.from(this.linksContainer.querySelectorAll('.link-editor-item'))
-                        .map(linkEl => {
-                            const title = linkEl.querySelector('.link-title-input').value;
-                            const url = linkEl.querySelector('.link-url-input').value;
-                            if (title && url) {
-                                return `
-                                    <a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full max-w-md mx-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-5 rounded-lg transition-transform transform hover:scale-105 shadow-lg">
-                                        ${title}
-                                    </a>`;
-                            }
-                            return '';
-                        }).join('\n                                ');
+                    const avatarSrc = this.avatarData || `https://placehold.co/128x128/3b82f6/FFFFFF?text=${name.charAt(1) ? name.charAt(1).toUpperCase() : 'K'}`;
+                    const linksHtml = Array.from(this.linksContainer.querySelectorAll('.link-editor-item')).map(linkEl => {
+                        const title = linkEl.querySelector('.link-title-input').value;
+                        const url = linkEl.querySelector('.link-url-input').value;
+                        if (title && url) {
+                            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="block w-full max-w-md mx-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-5 rounded-lg transition-transform transform hover:scale-105 shadow-lg">${title}</a>`;
+                        }
+                        return '';
+                    }).join('\n                        ');
 
                     return `<!DOCTYPE html>
 <html lang="en">
@@ -462,9 +498,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${name}'s Links</title>
     <script src="https://cdn.tailwindcss.com"><\/script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <style> body { font-family: 'Inter', sans-serif; } </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -472,7 +506,7 @@
 <body class="bg-gray-900 text-white">
     <div class="container mx-auto px-4 py-8 text-center">
         <header class="mb-8">
-            <img src="https://placehold.co/128x128/3b82f6/FFFFFF?text=${name.charAt(1) ? name.charAt(1).toUpperCase() : 'K'}" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-700">
+            <img src="${avatarSrc}" alt="Avatar" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-700 object-cover">
             <h1 class="text-3xl font-bold">${name}</h1>
             <p class="text-gray-400 mt-1">${description}</p>
         </header>
@@ -480,7 +514,7 @@
             ${linksHtml}
         </main>
         <footer class="mt-12 text-gray-500 text-sm">
-            <p>built by kang company</p>
+            <p>by kang company</p>
         </footer>
     </div>
 </body>
@@ -559,7 +593,6 @@
 
                         if (!response.ok) {
                             const errorData = await response.json();
-                            console.error('API Error Response:', errorData);
                             throw new Error(`API error (${response.status}): ${errorData.error?.message || response.statusText}`);
                         }
 
@@ -663,13 +696,12 @@
                     const duration = endTime - startTime;
                     
                     if (duration <= 0) {
-                        // Replaced alert with toast notification
                         showToast("Error: End time must be after start time.");
                         this.loader.classList.add('hidden');
                         return;
                     }
                     
-                    const frameRate = 10; // 10 fps
+                    const frameRate = 10;
                     const interval = 1 / frameRate;
                     let currentTime = startTime;
 
@@ -687,7 +719,6 @@
                         gif.addFrame(canvas, { copy: true, delay: interval * 1000 });
                         
                         currentTime += interval;
-                        // Add a check to prevent infinite loops on some browsers
                         if (currentTime < video.duration) {
                            video.currentTime = currentTime;
                         } else {
