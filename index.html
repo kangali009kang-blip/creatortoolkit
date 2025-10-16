@@ -4,25 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
     <title>Content Creator's Toolkit - Free Browser-Based Tools</title>
     <meta name="description" content="A free suite of fast, browser-based tools for content creators. Includes a Hashtag Generator, Bio Link Page Builder, AI Image Caption Generator, and a Video to GIF Maker. No sign-up required.">
     <meta name="keywords" content="content creator tools, hashtag generator, link in bio tool, ai caption generator, instagram tools, twitter tools, social media marketing, video to gif, free tools for creators">
     <meta name="author" content="kang company">
 
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%233b82f6%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>K</text></svg>">
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- GIF.js library for GIF Maker -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TMNNS53M90"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-TMNNS53M90');
+    </script>
 
     <style>
         body {
@@ -127,7 +131,6 @@
 </head>
 <body class="text-gray-200">
 
-    <!-- Header & Navigation -->
     <header class="bg-gray-800/80 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-700">
         <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
             <h1 class="text-xl sm:text-2xl font-bold text-white">
@@ -151,16 +154,13 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main class="container mx-auto px-4 sm:px-6 py-12">
 
-        <!-- Intro -->
         <div class="text-center mb-16">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">Your One-Stop Toolkit for Creation</h2>
             <p class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto">A collection of small, fast, and free browser-based tools to supercharge your content workflow. No downloads, no sign-ups.</p>
         </div>
 
-        <!-- Tool: Hashtag Generator -->
         <section id="hashtag" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">⚡ Hashtag Generator</h3>
             <p class="text-gray-400 mb-6">Enter a keyword to generate relevant hashtags for your social media posts.</p>
@@ -184,7 +184,7 @@
                     <div class="hashtag-list" id="twitter-hashtags"></div>
                 </div>
                 <div>
-                     <div class="flex justify-between items-center mb-2">
+                   <div class="flex justify-between items-center mb-2">
                         <h4 class="text-lg font-semibold text-white">💼 LinkedIn</h4>
                         <button class="btn-secondary text-sm copy-hashtags-btn" data-target="linkedin-hashtags">Copy</button>
                     </div>
@@ -193,12 +193,10 @@
             </div>
         </section>
 
-        <!-- Tool: Bio Link Page Builder -->
         <section id="bio-link" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">🔗 Bio Link Page Builder</h3>
             <p class="text-gray-400 mb-6">Create a simple, customizable page for your social media bio links. An easy alternative to Linktree.</p>
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Editor -->
                 <div class="space-y-4">
                     <h4 class="text-lg font-semibold">Editor</h4>
                     <div>
@@ -210,12 +208,10 @@
                         <input type="text" id="bio-description" class="input-field" placeholder="Creator | Developer | Explorer" value="Creator | Developer | Explorer">
                     </div>
                     <div id="bio-links-container" class="space-y-3 pt-4">
-                        <!-- Links will be added here -->
-                    </div>
+                        </div>
                     <button id="add-link-btn" class="btn-secondary w-full">+ Add New Link</button>
                     <button id="export-html-btn" class="btn-primary w-full mt-4">Download Bio Page HTML</button>
                 </div>
-                <!-- Preview -->
                 <div>
                     <h4 class="text-lg font-semibold mb-2">Live Preview</h4>
                     <div class="bg-gray-900 rounded-xl p-4 border border-gray-700 aspect-[9/16] max-h-[600px] overflow-y-auto">
@@ -224,20 +220,17 @@
                             <h2 id="preview-name" class="text-xl font-bold text-white">@yourname</h2>
                             <p id="preview-description" class="text-gray-400 mb-6 text-sm">Creator | Developer | Explorer</p>
                             <div id="preview-links" class="space-y-4">
-                                <!-- Preview links will be mirrored here -->
-                            </div>
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Tool: Image Caption & Quote Generator -->
         <section id="caption" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">✍️ AI Image Caption Generator</h3>
             <p class="text-gray-400 mb-6">Upload an image and let AI suggest engaging captions, questions, or relevant quotes.</p>
             
-            <!-- API Key Input -->
             <div class="mb-6">
                 <label for="api-key" class="block mb-1 text-sm font-medium">Your Gemini API Key</label>
                 <input type="password" id="api-key" class="input-field" placeholder="Enter your Google AI Studio API Key here">
@@ -258,7 +251,6 @@
             </div>
         </section>
 
-        <!-- Tool: Video Trimmer & GIF Maker -->
         <section id="gif-maker" class="tool-card">
             <h3 class="text-xl sm:text-2xl font-bold mb-1 text-white">🎬 Simple Video to GIF Maker</h3>
             <p class="text-gray-400 mb-6">Quickly convert a short video clip into an animated GIF without watermarks.</p>
@@ -289,7 +281,6 @@
         
     </main>
     
-    <!-- Toast Notification -->
     <div id="toast" class="toast">Copied to clipboard!</div>
 
     <footer class="text-center py-8 border-t border-gray-800">
@@ -462,7 +453,7 @@
                                     </a>`;
                             }
                             return '';
-                        }).join('\n                            ');
+                        }).join('\n                                ');
 
                     return `<!DOCTYPE html>
 <html lang="en">
@@ -548,7 +539,7 @@
                     this.loader.classList.remove('hidden');
                     const base64Data = await this.toBase64(file);
                     
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
                     const payload = {
                         contents: [{
